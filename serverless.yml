@@ -1,8 +1,10 @@
-service: serverless-lambda-s3
+org: emsesc
+app: serverless-syncfit
+service: syncfit-serverless-lambda
 
 provider:
   name: aws
-  runtime: nodejs8.10
+  runtime: nodejs12.x
   stage: production
   iamRoleStatements:
     - Effect: Allow
@@ -11,22 +13,22 @@ provider:
       Resource: "*"
 
 functions:
-  processCSV:
-    name: processCSV
-    handler: handler.processCSV
+  processTCX:
+    name: processTCX
+    handler: handler.processTCX
     events:
       - s3:
-          bucket: CSV-BUCKET-NAME-CHANGE-ME
+          bucket: syncfittcxfiles
           event: s3:ObjectCreated:*
           rules:
-            - suffix: .csv
+            - suffix: .txt
     environment:
       FIXED_WIDTH_BUCKET: ${self:resources.Resources.fixedwidth.Properties.BucketName}
       NODE_ENV: production
 
 resources:
   Resources:
-    fixedwidth:
+    zippeddone:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: FIXED-WIDTH-BUCKET-NAME-CHANGE-ME
+        BucketName: zippeddonebucket
