@@ -23,7 +23,7 @@ functions:
           rules:
             - suffix: .txt
     environment:
-      FIXED_WIDTH_BUCKET: ${self:resources.Resources.fixedwidth.Properties.BucketName}
+      ZIPPED_DONE_BUCKET: ${self:resources.Resources.zippeddone.Properties.BucketName}
       NODE_ENV: production
 
 resources:
